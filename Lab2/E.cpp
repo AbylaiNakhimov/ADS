@@ -1,43 +1,52 @@
 #include <iostream>
+#include <map>
+using namespace std;
 
-using namespace std; 
+struct Node {
+    string val;
+    Node *next;
 
-class Node  
-{  
-    public: 
-    string data;  
-    Node* next;  
-};  
-  
-void removeDuplicates(Node* head)  
-{   Node* cur = head;
-    Node* rem = head;
-    while(cur != NULL) {
-        if (cur -> data == rem -> data) {
-            rem->next = cur->next;
-            Node *tmp = cur;
-            cur = cur->next;
-            delete tmp;
-        }
-        else {
-            rem->next = cur;
-            rem = rem->next;
-            cur = cur->next;
-        }
-        // cur = cur->next;
+    Node(string val) {
+        this->val = val;
+        this->next = NULL;
+    } 
+    Node () { 
     }
-}  
+};
 
-int getCount(Node* head)  
-{  
-    int count = 0;
-    Node* cur = head;
+void print(Node* head) {
+  Node* cur = head;
+  while (cur != NULL) {
+    cout << cur->val << endl;
+    cur = cur->next;
+  }
+}
+
+void duplicate(Node* head) {
+    Node *cur = head;
+    Node *prev = head;
+
     while (cur != NULL) {
-        count++;
+        if (cur->val == prev->val) {
+            prev->next = cur->next;
+        } else {
+            prev -> next = cur;
+            prev = prev->next;
+        }
         cur = cur->next;
     }
-    return count;  
-}  
+
+}
+
+int getCount(Node* head) {
+    Node * cur = head;
+    int cnt = 0;
+    while (cur != NULL) {
+        cnt++;
+        cur = cur->next;
+    }
+    return cnt;
+}
 
 void push(Node** head_ref, string new_data)  
 {  
@@ -45,41 +54,29 @@ void push(Node** head_ref, string new_data)
     Node* new_node = new Node(); 
               
 
-    new_node->data = new_data;  
+    new_node->val = new_data;  
                   
 
     new_node->next = (*head_ref);      
           
 
     (*head_ref) = new_node;  
-}  
- 
+}
 
-void printList(Node *node)  
-{  
-    while (node != NULL)  
-    {  
-        cout<<node->data<<"\n";  
-        node = node->next;  
-    }  
-}  
 
-int main()  
-{  
-    int n;
-    string s;
-    cin>>n;
-    Node* head = NULL;  
-    for(int i = 0; i < n; i++){
-        cin >> s;
-        push(&head, s);
-    }
-                                      
-    removeDuplicates(head);  
-    cout << "All in all: " << getCount(head);
-  
-    cout << "\nStudents:\n";      
-    printList(head);              
-  
-    return 0;  
+int main () {
+int n; cin >>n;
+Node *head = NULL;
+string val;
+for (int i = 0; i < n; i++) {
+cin >>val;
+    push(&head, val);
+}
+
+duplicate (head);
+cout << "All in all: "<< getCount(head) << endl;
+cout << "Students:"<< endl;
+print(head);
+
+
 }

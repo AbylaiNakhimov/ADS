@@ -1,74 +1,54 @@
-#include <iostream>
-#include <math.h>
-
+#include<iostream>
+#include<cmath>
 using namespace std;
-
-struct node {
-  int value;
-  node* next;
-
-  node() {
-      this->value = 0;
-      this->next = NULL;
-  }
-  node(int data) {
-      this->value = data;
-      this->next = NULL;
-  }
-  node(int data, node* next) {
-      this->value = data;
-      this->next = next;
-  }
+struct Node
+{
+    int val;  
+    Node * next;
+    Node(int val){
+        this->val = val;
+        this->next = NULL;
+    }
 };
-
-node *reverse(node *head) {
-    node *cur = head;
-    node *next;
-    node *prev = NULL;
-    while (next != NULL) {
-        next = cur->next;
-        cur->next = prev;
-        prev = cur;
-        cur = next;
-    }
-    head = prev;
-    return head;
-}
- 
-int main() {
-    node *head;
-    node *cur;
-    int n, cnt = 0;
-    cin >> n;
-    for (int i = 0; i < n; i++) {
-        int a;
-        cin >> a;
-        if (i == 0) {
-            head = new node(a);
-            cur = head;
-        }
-        else {
-            cur->next = new node(a);
-            cur = cur->next;
-        }
-    }
-    // int target, diff = INT32_MAX, min;
-    // cur = head;
-    // cin >> target;
-    // while(cur != NULL) {
-    //     if(abs(cur->value - target) < diff) {
-    //         diff = abs(cur->value - target);
-    //         min = cnt;
-    //     }
-    //     cnt++;
-    //     cur = cur->next;
-    // }
-    // cout << min;
-    
-    head = reverse(head);
-    cur = head;
-    while(cur != NULL) {
-        cout << cur->value << " ";
+void isNearest(Node * head, int c){
+    Node * cur = head;
+    int otv = 0;
+    int pos = 0;
+    int min = abs(head->val - c); // 7 8 -10 4 1   5
+    while (cur != NULL)
+    {
+        if (min > abs(cur->val - c))
+        {
+            min = abs(cur->val - c);
+            otv = pos;
+        }  
         cur = cur->next;
+        pos++;
     }
+    cout << otv;
+}
+int main(){
+    int n;cin >> n;
+    Node * head;
+    Node * tail;
+    Node * vre;
+    for (int i = 0; i < n; i++)
+    {
+        int nums;
+        cin >> nums;
+        if (i == 0)
+        {
+            head = new Node(nums);
+            tail = head;
+        }
+        else
+        {
+            vre = new Node(nums);
+            tail->next = vre;
+            tail = vre;
+        }  
+    }
+    int finder;
+    cin >> finder;
+    isNearest(head, finder); 
 }
